@@ -1,0 +1,137 @@
+[
+  {
+    "key": "fonline-3",
+    "name": "FOnline 3",
+    "sourceLabel": "Кураторский список",
+    "description": "Последний подтверждённый онлайн из кураторского списка. Публичный live-источник пока не найден.",
+    "preferredSource": "site-only",
+    "tags": ["active", "manual"]
+  },
+  {
+    "key": "fonline-2-s3",
+    "name": "FOnline 2 S3",
+    "sourceLabel": "Кураторский список",
+    "description": "Последний подтверждённый онлайн сезонного сервера FOnline 2 S3.",
+    "preferredSource": "site-only",
+    "tags": ["active", "season-3", "manual"]
+  },
+  {
+    "key": "requiem",
+    "name": "Requiem",
+    "sourceLabel": "Кураторский список",
+    "description": "Последний подтверждённый онлайн сервера Requiem из кураторского списка Fallout Online.",
+    "preferredSource": "site-only",
+    "tags": ["active", "manual"]
+  },
+  {
+    "key": "parareal",
+    "name": "FOnline: Parareal",
+    "sourceLabel": "Официальный live-источник",
+    "description": "Современный FOClassic-проект. Для live-режима используется официальный status-proxy и TCP-проверка адреса.",
+    "websiteUrl": "https://www.fonline-parareal.com/",
+    "statusPageUrl": "https://fonline-parareal.com/gameinfo.html",
+    "statusApiUrl": "https://fonline-parareal.com/status-proxy.php",
+    "downloadUrl": "https://fonline-parareal.com/download.html",
+    "address": "game.fonline-parareal.com:2238",
+    "gameHost": "game.fonline-parareal.com",
+    "gamePort": 2238,
+    "preferredSource": "tcp+api",
+    "tags": ["active", "foclassic", "season-4"]
+  },
+  {
+    "key": "reloaded",
+    "name": "FOnline: Reloaded",
+    "sourceLabel": "Официальный виджет",
+    "description": "Классический сервер Rotators. В live-режиме используется TCP-проверка игрового адреса и официальный статус-виджет.",
+    "websiteUrl": "https://www.fonline.org/",
+    "statusPageUrl": "https://forum.fonline-reloaded.net/index.php?topic=1.0",
+    "statusImageUrl": "https://forum.fonline-reloaded.net/server_status.php",
+    "statsUrl": "https://fodev.net/status/server/reloaded/",
+    "downloadUrl": "https://forum.fonline-reloaded.net/index.php?topic=1.0",
+    "address": "play.fonline-reloaded.net:2238",
+    "gameHost": "play.fonline-reloaded.net",
+    "gamePort": 2238,
+    "preferredSource": "tcp+widget",
+    "tags": ["active", "classic", "official", "widget"]
+  },
+  {
+    "key": "goon-haven-new-life",
+    "name": "Goon Haven New Life",
+    "sourceLabel": "Кураторский список",
+    "description": "Последний подтверждённый онлайн сервера Goon Haven New Life.",
+    "preferredSource": "site-only",
+    "tags": ["active", "manual"]
+  },
+  {
+    "key": "fonline-fun",
+    "name": "FOnline Fun",
+    "sourceLabel": "Кураторский список",
+    "description": "Последний подтверждённый онлайн сервера FOnline Fun.",
+    "preferredSource": "site-only",
+    "tags": ["active", "manual"]
+  },
+  {
+    "key": "never-changes",
+    "name": "Never Changes",
+    "sourceLabel": "Кураторский список",
+    "description": "Последний подтверждённый онлайн сервера Never Changes.",
+    "preferredSource": "site-only",
+    "tags": ["active", "manual"]
+  },
+  {
+    "key": "fonline-2258",
+    "name": "FOnline 2258",
+    "sourceLabel": "Кураторский список",
+    "description": "Последний подтверждённый онлайн сервера FOnline 2258.",
+    "preferredSource": "site-only",
+    "tags": ["active", "manual"]
+  },
+  {
+    "key": "the-long-journey",
+    "name": "The Long Journey",
+    "sourceLabel": "Кураторский список",
+    "description": "Последний подтверждённый онлайн сервера The Long Journey.",
+    "preferredSource": "site-only",
+    "tags": ["active", "manual"]
+  },
+  {
+    "key": "too-much-of-heaven-mk2",
+    "name": "Too Much of Heaven MK2",
+    "sourceLabel": "Кураторский список",
+    "description": "Последний подтверждённый онлайн сервера Too Much of Heaven MK2.",
+    "preferredSource": "site-only",
+    "tags": ["active", "manual"]
+  },
+  {
+    "key": "nenntoriata",
+    "name": "Nenntoriata",
+    "sourceLabel": "Кураторский список",
+    "description": "Последний подтверждённый онлайн сервера Nenntoriata.",
+    "preferredSource": "site-only",
+    "tags": ["active", "manual"]
+  },
+  {
+    "key": "another-way-to-die",
+    "name": "Another Way to Die",
+    "sourceLabel": "Кураторский список",
+    "description": "Последний подтверждённый онлайн сервера Another Way to Die.",
+    "preferredSource": "site-only",
+    "tags": ["active", "manual"]
+  },
+  {
+    "key": "fonline-2-s4-beta",
+    "name": "FOnline 2 S4 Beta",
+    "sourceLabel": "Кураторский список",
+    "description": "Последний подтверждённый онлайн тестового сервера FOnline 2 S4 Beta.",
+    "preferredSource": "site-only",
+    "tags": ["active", "season-4", "beta", "manual"]
+  },
+  {
+    "key": "the-long-journey-ru",
+    "name": "The Long Journey RU",
+    "sourceLabel": "Кураторский список",
+    "description": "Последний подтверждённый онлайн русскоязычного сервера The Long Journey RU.",
+    "preferredSource": "site-only",
+    "tags": ["active", "ru", "manual"]
+  }
+]

@@ -1,0 +1,14 @@
+services:
+  - type: web
+    name: falloutfanatics-fonline-api
+    runtime: node
+    buildCommand: npm install
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: HOST
+        value: 0.0.0.0
+      - key: FONLINE_STATUS_TIMEOUT_MS
+        value: 5000
+      - key: FONLINE_STATUS_CACHE_TTL_MS
+        value: 45000
