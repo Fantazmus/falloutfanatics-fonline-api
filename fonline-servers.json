@@ -2,25 +2,41 @@
   {
     "key": "fonline-3",
     "name": "FOnline 3",
+    "websiteUrl": "https://fonline3.com/",
     "sourceLabel": "Кураторский список",
     "description": "Последний подтверждённый онлайн из кураторского списка. Публичный live-источник пока не найден.",
     "preferredSource": "site-only",
+    "statusText": "Онлайн",
+    "playersOnline": 13,
+    "maxPlayers": 52,
+    "online": true,
     "tags": ["active", "manual"]
   },
   {
     "key": "fonline-2-s3",
     "name": "FOnline 2 S3",
+    "websiteUrl": "https://fonline2.com/",
+    "projectPageUrl": "https://falloutfanatics.com/download_fonline_2",
     "sourceLabel": "Кураторский список",
     "description": "Последний подтверждённый онлайн сезонного сервера FOnline 2 S3.",
     "preferredSource": "site-only",
+    "statusText": "Онлайн",
+    "playersOnline": 11,
+    "maxPlayers": 64,
+    "online": true,
     "tags": ["active", "season-3", "manual"]
   },
   {
     "key": "requiem",
     "name": "Requiem",
+    "projectPageUrl": "https://falloutfanatics.com/download_fonline_requiem",
     "sourceLabel": "Кураторский список",
     "description": "Последний подтверждённый онлайн сервера Requiem из кураторского списка Fallout Online.",
     "preferredSource": "site-only",
+    "statusText": "Онлайн",
+    "playersOnline": 7,
+    "maxPlayers": 28,
+    "online": true,
     "tags": ["active", "manual"]
   },
   {
@@ -36,6 +52,10 @@
     "gameHost": "game.fonline-parareal.com",
     "gamePort": 2238,
     "preferredSource": "tcp+api",
+    "statusText": "Онлайн",
+    "playersOnline": 7,
+    "maxPlayers": 23,
+    "online": true,
     "tags": ["active", "foclassic", "season-4"]
   },
   {
@@ -52,14 +72,23 @@
     "gameHost": "play.fonline-reloaded.net",
     "gamePort": 2238,
     "preferredSource": "tcp+widget",
+    "statusText": "Онлайн",
+    "playersOnline": 5,
+    "maxPlayers": 15,
+    "online": true,
     "tags": ["active", "classic", "official", "widget"]
   },
   {
     "key": "goon-haven-new-life",
     "name": "Goon Haven New Life",
+    "projectPageUrl": "https://falloutfanatics.com/download_fonline_goon_haven",
     "sourceLabel": "Кураторский список",
     "description": "Последний подтверждённый онлайн сервера Goon Haven New Life.",
     "preferredSource": "site-only",
+    "statusText": "Онлайн",
+    "playersOnline": 5,
+    "maxPlayers": 9,
+    "online": true,
     "tags": ["active", "manual"]
   },
   {
@@ -68,22 +97,37 @@
     "sourceLabel": "Кураторский список",
     "description": "Последний подтверждённый онлайн сервера FOnline Fun.",
     "preferredSource": "site-only",
+    "statusText": "Онлайн",
+    "playersOnline": 5,
+    "maxPlayers": 7,
+    "online": true,
     "tags": ["active", "manual"]
   },
   {
     "key": "never-changes",
     "name": "Never Changes",
+    "websiteUrl": "https://neverchanges.ru/",
     "sourceLabel": "Кураторский список",
     "description": "Последний подтверждённый онлайн сервера Never Changes.",
     "preferredSource": "site-only",
+    "statusText": "Онлайн",
+    "playersOnline": 4,
+    "maxPlayers": 17,
+    "online": true,
     "tags": ["active", "manual"]
   },
   {
     "key": "fonline-2258",
     "name": "FOnline 2258",
+    "websiteUrl": "https://fonline2258.com/",
+    "projectPageUrl": "https://falloutfanatics.com/download_fonline_2238",
     "sourceLabel": "Кураторский список",
     "description": "Последний подтверждённый онлайн сервера FOnline 2258.",
     "preferredSource": "site-only",
+    "statusText": "Онлайн",
+    "playersOnline": 4,
+    "maxPlayers": 13,
+    "online": true,
     "tags": ["active", "manual"]
   },
   {
@@ -92,14 +136,23 @@
     "sourceLabel": "Кураторский список",
     "description": "Последний подтверждённый онлайн сервера The Long Journey.",
     "preferredSource": "site-only",
+    "statusText": "Онлайн",
+    "playersOnline": 2,
+    "maxPlayers": 18,
+    "online": true,
     "tags": ["active", "manual"]
   },
   {
     "key": "too-much-of-heaven-mk2",
     "name": "Too Much of Heaven MK2",
+    "projectPageUrl": "https://falloutfanatics.com/tmh",
     "sourceLabel": "Кураторский список",
     "description": "Последний подтверждённый онлайн сервера Too Much of Heaven MK2.",
     "preferredSource": "site-only",
+    "statusText": "Онлайн",
+    "playersOnline": 2,
+    "maxPlayers": 16,
+    "online": true,
     "tags": ["active", "manual"]
   },
   {
@@ -108,6 +161,10 @@
     "sourceLabel": "Кураторский список",
     "description": "Последний подтверждённый онлайн сервера Nenntoriata.",
     "preferredSource": "site-only",
+    "statusText": "Онлайн",
+    "playersOnline": 2,
+    "maxPlayers": 15,
+    "online": true,
     "tags": ["active", "manual"]
   },
   {
@@ -116,14 +173,24 @@
     "sourceLabel": "Кураторский список",
     "description": "Последний подтверждённый онлайн сервера Another Way to Die.",
     "preferredSource": "site-only",
+    "statusText": "Онлайн",
+    "playersOnline": 2,
+    "maxPlayers": 8,
+    "online": true,
     "tags": ["active", "manual"]
   },
   {
     "key": "fonline-2-s4-beta",
     "name": "FOnline 2 S4 Beta",
+    "websiteUrl": "https://fonline2.com/",
+    "projectPageUrl": "https://falloutfanatics.com/download_fonline_2",
     "sourceLabel": "Кураторский список",
     "description": "Последний подтверждённый онлайн тестового сервера FOnline 2 S4 Beta.",
     "preferredSource": "site-only",
+    "statusText": "Онлайн",
+    "playersOnline": 1,
+    "maxPlayers": 4,
+    "online": true,
     "tags": ["active", "season-4", "beta", "manual"]
   },
   {
@@ -132,6 +199,10 @@
     "sourceLabel": "Кураторский список",
     "description": "Последний подтверждённый онлайн русскоязычного сервера The Long Journey RU.",
     "preferredSource": "site-only",
+    "statusText": "Онлайн",
+    "playersOnline": 0,
+    "maxPlayers": 3,
+    "online": true,
     "tags": ["active", "ru", "manual"]
   }
 ]
