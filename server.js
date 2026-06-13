@@ -1,150 +1,100 @@
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit"
-    });
+import fs from "node:fs/promises";
+import net from "node:net";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
+
+import cors from "cors";
+import express from "express";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const HOST = String(process.env.HOST || "0.0.0.0").trim() || "0.0.0.0";
+const PORT = clampInteger(process.env.PORT, 3000, 1, 65535);
+const REQUEST_TIMEOUT_MS = clampInteger(process.env.REQUEST_TIMEOUT_MS, 10000, 2000, 30000);
+const FONLINE_STATUS_TIMEOUT_MS = clampInteger(process.env.FONLINE_STATUS_TIMEOUT_MS, 5000, 1000, 20000);
+const FONLINE_STATUS_CACHE_TTL_MS = clampInteger(process.env.FONLINE_STATUS_CACHE_TTL_MS, 45000, 1000, 300000);
+const FALLOUT76_STATUS_CACHE_TTL_MS = clampInteger(process.env.FALLOUT76_STATUS_CACHE_TTL_MS, 60000, 1000, 300000);
+const FONLINE_SERVERS_CONFIG_PATH = path.join(__dirname, "fonline-servers.json");
+const FALLOUT76_STEAM_APP_ID = 1151340;
+const FALLOUT76_STEAM_STORE_URL = "https://store.steampowered.com/app/1151340/Fallout_76/";
+const FALLOUT76_OFFICIAL_SITE_URL = "https://fallout.bethesda.net/en/games/fallout-76";
+const FALLOUT76_HUB_URL = "https://bethesda.net/en/game/fallout-76";
+const FALLOUT76_SUPPORT_URL = "https://help.bethesda.net/";
+
+const app = express();
+const responseCache = new Map();
+const MASTERLIST_TEXT_COLLATOR = new Intl.Collator("en", {
+  sensitivity: "base",
+  numeric: true
+});
+
+app.disable("x-powered-by");
+app.use(cors());
+app.use(express.json());
+
+function clampInteger(value, fallback, min, max) {
+  const parsed = Number.parseInt(String(value ?? ""), 10);
+
+  if (!Number.isFinite(parsed)) {
+    return fallback;
   }
 
-  function getOverallLabel(value) {
-    if (value === "online") {
-      return "Сигналы в норме";
-    }
+  return Math.min(max, Math.max(min, parsed));
+}
 
-    if (value === "degraded") {
-      return "Есть проблемы";
-    }
-
-    return "Нужна проверка";
+function normalizeOptionalInteger(value, min, max) {
+  if (value === undefined || value === null || value === "") {
+    return null;
   }
 
-  function getStatusLabel(value) {
-    if (value === "online") {
-      return "ONLINE";
-    }
+  const parsed = Number.parseInt(String(value), 10);
 
-    if (value === "offline") {
-      return "OFFLINE";
-    }
-
-    return "UNKNOWN";
+  if (!Number.isFinite(parsed)) {
+    return null;
   }
 
-  function updateSummary(payload) {
-    var summary = payload.summary || {};
+  return Math.min(max, Math.max(min, parsed));
+}
 
-    elements.summarySignals.textContent = formatNumber(summary.signalCount || 0);
-    elements.summaryAvailable.textContent = formatNumber(summary.availableCount || 0);
-    elements.summaryPlayers.textContent = summary.steamPlayers == null ? "—" : formatNumber(summary.steamPlayers);
-    elements.summaryChecked.textContent = formatCheckedAt(payload.fetchedAt);
-    elements.summaryStatus.textContent = getOverallLabel(summary.overallStatus);
-    elements.summaryCache.textContent = payload.cached ? "Кэшированный ответ API" : "Свежая проверка";
-    elements.metaSource.textContent = payload.source === "official-public-signals"
-      ? "Steam + Bethesda"
-      : "Локальный fallback";
+function sanitizeDisplayText(value, maxLength = 240) {
+  return String(value || "")
+    .replace(/[\u0000-\u001f\u007f]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .slice(0, maxLength);
+}
+
+function sanitizeHost(value) {
+  const normalized = String(value || "").trim().toLowerCase();
+
+  if (!normalized) {
+    return "";
   }
 
-  function matchesFilter(item, filterValue) {
-    if (!filterValue) {
-      return true;
-    }
+  return /^[a-z0-9.-]+$/i.test(normalized) ? normalized : "";
+}
 
-    var haystack = [
-      item.name,
-      item.sourceLabel,
-      item.title,
-      item.description,
-      item.note
-    ].join(" ").toLowerCase();
+function sanitizeExternalUrl(value) {
+  const normalized = String(value || "").trim();
 
-    return haystack.indexOf(filterValue) !== -1;
+  if (!normalized) {
+    return "";
   }
 
-  function renderGrid(payload) {
-    var filterValue = currentFilter;
-    var items = Array.isArray(payload.items) ? payload.items.filter(function (item) {
-      return matchesFilter(item, filterValue);
-    }) : [];
-
-    if (!items.length) {
-      elements.grid.innerHTML = '<div class="ff76Monitor__empty">Карточки не найдены. Попробуй другой фильтр.</div>';
-      return;
-    }
-
-    elements.grid.innerHTML = items.map(function (item) {
-      var pillClass = "ff76Card__pill ff76Card__pill--" + escapeHtml(item.status || "unknown");
-      var valueLabel = item.valueLabel || (item.value == null ? "—" : String(item.value));
-      var buttons = [];
-
-      if (item.url) {
-        buttons.push('<a class="ff76Card__button" href="' + escapeHtml(item.url) + '" target="_blank" rel="noreferrer">Открыть</a>');
-      }
-
-      return [
-        '<article class="ff76Card">',
-        '<div class="ff76Card__head">',
-        '<div>',
-        '<div class="ff76Card__eyebrow">' + escapeHtml(item.sourceLabel || "Fallout 76") + '</div>',
-        '<h2>' + escapeHtml(item.name || "Сигнал") + '</h2>',
-        '</div>',
-        '<span class="' + pillClass + '">' + escapeHtml(getStatusLabel(item.status)) + '</span>',
-        '</div>',
-        '<p class="ff76Card__desc">' + escapeHtml(item.description || "") + '</p>',
-        '<div class="ff76Card__stats">',
-        '<div class="ff76Card__stat"><span>Значение</span><b>' + escapeHtml(valueLabel) + '</b></div>',
-        '<div class="ff76Card__stat"><span>Источник</span><b>' + escapeHtml(item.sourceLabel || "Мониторинг") + '</b></div>',
-        '<div class="ff76Card__stat"><span>HTTP / API</span><b>' + escapeHtml(item.httpStatus ? ("HTTP " + item.httpStatus) : (item.kind === "players" ? "LIVE" : "—")) + '</b></div>',
-        '<div class="ff76Card__stat"><span>Страница</span><b>' + escapeHtml(item.title || "Открыть источник") + '</b></div>',
-        '</div>',
-        buttons.length ? '<div class="ff76Card__actions">' + buttons.join("") + '</div>' : "",
-        '<div class="ff76Card__note">' + escapeHtml(item.note || "") + '</div>',
-        '</article>'
-      ].join("");
-    }).join("");
+  try {
+    const parsed = new URL(normalized);
+    return /^(https?):$/i.test(parsed.protocol) ? parsed.toString() : "";
+  } catch (_) {
+    return "";
   }
+}
 
-  async function loadPayload(forceRefresh) {
-    var targetUrl = API_URL + (API_URL.indexOf("?") === -1 ? "?" : "&") + "t=" + Date.now();
+function normalizeFonlineSourceMode(value) {
+  const normalized = String(value || "tcp+html").trim().toLowerCase();
+  return new Set(["tcp+api", "api-only", "tcp+html", "tcp+widget", "html-only", "widget-only", "site-only"]).has(normalized)
+    ? normalized
+    : "tcp+html";
+}
 
-    elements.metaSource.textContent = forceRefresh ? "Обновление..." : "Загрузка...";
-
-    try {
-      var response = await fetch(targetUrl, {
-        headers: {
-          Accept: "application/json"
-        },
-        cache: "no-store"
-      });
-
-      if (!response.ok) {
-        throw new Error("HTTP " + response.status);
-      }
-
-      var payload = await response.json();
-      currentPayload = payload && payload.items ? payload : FALLBACK_PAYLOAD;
-    } catch (error) {
-      currentPayload = FALLBACK_PAYLOAD;
-      currentPayload.fetchedAt = "";
-      currentPayload.cached = false;
-      currentPayload.summary.overallStatus = "unknown";
-    }
-
-    updateSummary(currentPayload);
-    renderGrid(currentPayload);
-  }
-
-  elements.reloadButton.addEventListener("click", function () {
-    loadPayload(true);
-  });
-
-  elements.searchInput.addEventListener("input", function () {
-    currentFilter = String(elements.searchInput.value || "").trim().toLowerCase();
-    renderGrid(currentPayload);
-  });
-
-  updateSummary(FALLBACK_PAYLOAD);
-  renderGrid(FALLBACK_PAYLOAD);
-  loadPayload(false);
-})();
-</script>
-</body>
+function normalizeFonlineTags(rawValue) {
